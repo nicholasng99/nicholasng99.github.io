@@ -1,0 +1,49 @@
+.list-inline-item {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.bg-light {
+  background-color: #e31112!important;
+}
+
+@media (min-width:992px) {
+  .masthead h1 {
+    font-size: calc(64px + (90 - 70) * ((100vw - 300px) / (1600 - 300)));
+  }
+}
+
+h1 {
+  font-weight: initial;
+}
+
+.logo {
+  width: auto;
+  height: 70%;
+  margin: auto;
+  margin-top: 0;
+  margin-bottom: 15px;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.masthead {
+  min-height: 30rem;
+  position: relative;
+  display: table;
+  width: 100%;
+  height: 75vh;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  background: linear-gradient(90deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,.1));
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.logo-header {
+  height: 100%;
+  width: 100%;
+}
+
