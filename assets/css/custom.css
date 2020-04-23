@@ -9,7 +9,7 @@
 
 @media (min-width:992px) {
   .masthead h1 {
-    font-size: calc(64px + (90 - 70) * ((100vw - 300px) / (1600 - 300)));
+    font-size: 70px;
   }
 }
 
@@ -20,7 +20,7 @@ h1 {
 .logo {
   width: auto;
   height: 70%;
-  margin: auto;
+  margin: 50px 50px;
   margin-top: 0;
   margin-bottom: 15px;
   background-position: center;
