@@ -1,0 +1,51 @@
+.list-inline-item {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.bg-light {
+  background-color: #e31112!important;
+}
+
+@media (min-width:992px) {
+  .masthead h1 {
+    font-size: 70px;
+  }
+}
+
+h1 {
+  font-weight: initial;
+}
+
+.masthead {
+  min-height: 30rem;
+  position: relative;
+  display: table;
+  width: 100%;
+  height: auto;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  background: linear-gradient(90deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,.1));
+  background-image: url(../../assets/img/Logo.png), url(../../assets/img/bg-masthead.jpg);
+  background-position: center 3rem, 50%;
+  background-repeat: no-repeat, no-repeat;
+  background-size: 300px, cover;
+  background-attachment: scroll, fixed;
+}
+
+.container.my-auto.name {
+  margin-top: 300px!important;
+}
+
+.bg-primary {
+  background-color: #e31112!important;
+}
+
+.text-muted {
+  color: #ffffff!important;
+}
+
+.text-primary {
+  color: #e31112!important;
+}
+
