@@ -27,11 +27,10 @@ h1 {
   padding-top: 3rem;
   padding-bottom: 3rem;
   background: linear-gradient(90deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,.1));
-  background-image: url(../../assets/img/Logo.png), url(../../assets/img/crane.webp);
-  background-position: center 3rem, 100% 100%;
-  background-repeat: no-repeat, no-repeat;
-  background-size: 300px, cover;
-  background-attachment: scroll, fixed;
+  background-position: center 3rem;
+  background-repeat: no-repeat;
+  background-size: 300px;
+  background-attachment: scroll;
 }
 
 .container.my-auto.name {
@@ -51,7 +50,9 @@ h1 {
 }
 
 .banner {
-  height: 600px;
-  width: 100%;
+  background-attachment: fixed;
+  background-position: right bottom;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
