@@ -1,6 +1,8 @@
 .list-inline-item {
   display: inline-block;
   vertical-align: top;
+  padding-bottom: 8px;
+  margin-right: 8px;
 }
 
 .bg-light {
@@ -18,16 +20,15 @@ h1 {
 }
 
 .masthead {
-  min-height: 30rem;
   position: relative;
   display: table;
   width: 100%;
-  height: auto;
+  height: 600px;
   padding-top: 3rem;
   padding-bottom: 3rem;
   background: linear-gradient(90deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,.1));
-  background-image: url(../../assets/img/Logo.png), url(../../assets/img/bg-masthead.jpg);
-  background-position: center 3rem, 50%;
+  background-image: url(../../assets/img/Logo.png), url(../../assets/img/crane.webp);
+  background-position: center 3rem, 100% 100%;
   background-repeat: no-repeat, no-repeat;
   background-size: 300px, cover;
   background-attachment: scroll, fixed;
@@ -47,5 +48,10 @@ h1 {
 
 .text-primary {
   color: #e31112!important;
+}
+
+.banner {
+  height: 600px;
+  width: 100%;
 }
 
