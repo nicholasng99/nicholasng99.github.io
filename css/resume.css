@@ -176,11 +176,3 @@ a:hover {
   text-align: left;
   padding-left: 5px;
 }
-
-.rotate-hover {
-  transition: all 0.3s ease-in-out;
-}
-
-.rotate-hover:hover {
-  transform: rotate(90deg);
-}
