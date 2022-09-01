@@ -1,3 +1,3 @@
 # My personal website
 A styled CV.  
-![Nicholas Ng](images/Logo.png)  
+![Nicholas Ng](images_back_up/Logo.png)  
