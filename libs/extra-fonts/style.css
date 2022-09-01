@@ -1,0 +1,30 @@
+@font-face {
+  font-family: "extra";
+  src: url("fonts/extra.eot?d2ygza");
+  src: url("fonts/extra.eot?d2ygza#iefix") format("embedded-opentype"),
+    url("fonts/extra.ttf?d2ygza") format("truetype"),
+    url("fonts/extra.woff?d2ygza") format("woff"),
+    url("fonts/extra.svg?d2ygza#extra") format("svg");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+.extra-icons {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: "extra" !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-vtk:before {
+  content: "\e900";
+}
