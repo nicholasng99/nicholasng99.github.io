@@ -1,3 +1,3 @@
 # My personal website
-Made with [Boostrap Studio](https://bootstrapstudio.io/) to act as a portfolio of my work.  
+A styled CV.
 ![Nicholas Ng](images/Logo.png)  
