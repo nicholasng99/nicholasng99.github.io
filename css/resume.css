@@ -170,3 +170,16 @@ a:hover {
 #cv:hover:after {
   color: #e31111;
 }
+
+#blossom {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* #branch {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 30%;
+} */
