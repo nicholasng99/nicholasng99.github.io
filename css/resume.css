@@ -175,6 +175,7 @@ a:hover {
   position: absolute;
   top: 0;
   left: 0;
+  z-index: -1;
 }
 
 #branch {
@@ -182,4 +183,5 @@ a:hover {
   margin-top: -15%;
   left: 40%;
   width: 60%;
+  z-index: -1;
 }
