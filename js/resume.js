@@ -98,7 +98,7 @@
         this.y += this.vy;
         this.opacity += this.dop;
 
-        var maxOpacity = Math.min(1, 1000 / (window.scrollY * 3 + 1));
+        var maxOpacity = Math.min(1, $("#about").height() / (window.scrollY * 3 + 1));//scales max opacity with scroll position
         if (this.opacity > maxOpacity) {
           this.opacity = maxOpacity;
           this.dop *= -1;
@@ -134,7 +134,7 @@
     })();
 
     window.step = function () {
-      setTimeout(step, 1000 / 60); //callback to self for endless animation
+      setTimeout(step, 1000 / 60); //callback to self for endless animation, 1000/60 is 60fps
       var c, _i, _len, _results;
       context.clearRect(0, 0, w, h);
       _results = [];
@@ -178,17 +178,17 @@
     });
 
     //text fade animation, not working properly yet
-    $(document).on("scroll", function () {
-      // $(".fade-in").each(function () {
-      // var windowHeight = $(window).height();
-      // var scrollPercent;
-      // scrollPercent = window.scrollY / windowHeight;
-      // if (scrollPercent > 1 && scrollPercent < 2)
-      //   scrollPercent = 1 - (scrollPercent % 1);
-      // if (scrollPercent < 0 || scrollPercent > 1) scrollPercent = 0;
-      // $(this).css("opacity", scrollPercent);
-      // });
-    });
+    // $(document).on("scroll", function () {
+    // $(".fade-in").each(function () {
+    // var windowHeight = $(window).height();
+    // var scrollPercent;
+    // scrollPercent = window.scrollY / windowHeight;
+    // if (scrollPercent > 1 && scrollPercent < 2)
+    //   scrollPercent = 1 - (scrollPercent % 1);
+    // if (scrollPercent < 0 || scrollPercent > 1) scrollPercent = 0;
+    // $(this).css("opacity", scrollPercent);
+    // });
+    // });
   }); //end of waypoint animations
 
   e('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function () {
