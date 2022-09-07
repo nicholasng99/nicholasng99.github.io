@@ -3,7 +3,7 @@
 
   // Enable tooltips
   $(function () {
-    $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="tooltip"]').tooltip({ trigger: "hover" });
   });
 
   // Typed text animation
@@ -22,134 +22,163 @@
     });
   }
 
-  // Blossom animation adapted from confetti code
-  // adapted and rewritten from https://codepen.io/linrock/pen/nMadjQ
-  (function (canvas) {
-    var COLORS,
-      Confetti,
-      NUM_CONFETTI,
-      PI_2,
-      confetti,
-      context,
-      i,
-      curosrX = 0.5;
+  var blossomState = true;
+  var autoBlossom = true;
+  var mobile = false;
 
-    NUM_CONFETTI = 350;
+  // On document ready
+  $(window).on("load", function () {
+    // detecting mobile device
+    mobile = window.matchMedia("(max-width: 767px)").matches;
 
-    COLORS = [
-      [255, 220, 220],
-      [255, 167, 166],
-      [242, 84, 119],
-      [236, 39, 95],
-      [236, 39, 95],
-    ];
-
-    PI_2 = 2 * Math.PI;
-    context = canvas.getContext("2d");
-    window.w = 0;
-    window.h = 0;
-
-    function resizeCanvas() {
-      canvas.width = canvas.height = 0; //reset to 0 first since it can be resized to smaller dimension
-      window.w = canvas.width = $(document).width();
-      return (window.h = canvas.height = $(document).height());
-    }
-    $(window).on("load resize", resizeCanvas);
-
-    function range(a, b) {
-      return (b - a) * Math.random() + a;
+    if (mobile) {
+      // auto blossom is false for mobile due to mobile scrolling animation issue
+      autoBlossom = false;
+      toggleBlossom();
     }
 
-    function drawCircle(x, y, r, style) {
-      context.beginPath();
-      context.arc(x, y, r, 0, PI_2, false);
-      context.fillStyle = style;
-      return context.fill();
-    }
+    // Blossom animation adapted from confetti code
+    // adapted and rewritten from https://codepen.io/linrock/pen/nMadjQ
+    (function (canvas) {
+      var COLORS,
+        Confetti,
+        NUM_CONFETTI,
+        PI_2,
+        confetti,
+        context,
+        i,
+        curosrX = 0.5;
 
-    $(document).on("mousemove", function (e) {
-      return (curosrX = e.pageX / w);
-    });
+      NUM_CONFETTI = 350;
 
-    Confetti = (function () {
-      function Confetti() {
-        this.style = COLORS[~~range(0, 5)];
-        this.rgb =
-          "rgba(" + this.style[0] + "," + this.style[1] + "," + this.style[2];
-        this.r = ~~range(3, 7); //size of circles
-        this.r2 = 2 * this.r;
-        this.replace();
+      COLORS = [
+        [255, 220, 220],
+        [255, 167, 166],
+        [242, 84, 119],
+        [236, 39, 95],
+        [236, 39, 95],
+      ];
+
+      PI_2 = 2 * Math.PI;
+      context = canvas.getContext("2d");
+      window.w = 0;
+      window.h = 0;
+
+      function resizeCanvas() {
+        canvas.width = canvas.height = 0; //reset to 0 first since it can be resized to smaller dimension
+        window.w = canvas.width = $(document).width();
+        return (window.h = canvas.height = $(document).height());
+      }
+      $(window).on("resize", resizeCanvas);
+      resizeCanvas(); //first resize on load
+
+      function range(a, b) {
+        return (b - a) * Math.random() + a;
       }
 
-      Confetti.prototype.replace = function () {
-        this.opacity = 0;
-        this.dop = 0.02 / range(1, 4); //opacity rate
-        this.x = range(-this.r2, w - this.r2); //x spread
-        this.y = range(-20, h - this.r2); //y spread
-        this.xmax = w - this.r;
-        this.ymax = h - this.r;
-        this.vx = range(0, 2) - 6 + 5 * curosrX; //x speed
-        return (this.vy = 1 * this.r + range(-1, 3)); //y speed
-      };
+      function drawCircle(x, y, r, style) {
+        context.beginPath();
+        context.arc(x, y, r, 0, PI_2, false);
+        context.fillStyle = style;
+        return context.fill();
+      }
 
-      Confetti.prototype.draw = function () {
-        var _ref;
-        this.x += this.vx;
-        this.y += this.vy;
-        this.opacity += this.dop;
+      $(document).on("mousemove", function (e) {
+        return (curosrX = e.pageX / w);
+      });
 
-        var maxOpacity = Math.min(1, 1000 / (window.scrollY * 3 + 1));
-        if (this.opacity > maxOpacity) {
-          this.opacity = maxOpacity;
-          this.dop *= -1;
-        }
-        if (this.opacity < 0 || this.y > this.ymax) {
+      Confetti = (function () {
+        function Confetti() {
+          this.style = COLORS[~~range(0, 5)];
+          this.rgb =
+            "rgba(" + this.style[0] + "," + this.style[1] + "," + this.style[2];
+          this.r = ~~range(3, 7); //size of circles
+          this.r2 = 2 * this.r;
           this.replace();
         }
-        if (!(0 < (_ref = this.x) && _ref < this.xmax)) {
-          this.x = (this.x + this.xmax) % this.xmax;
+
+        Confetti.prototype.replace = function () {
+          this.opacity = 0;
+          this.dop = 0.02 / range(1, 4); //opacity rate
+          this.x = range(-this.r2, w - this.r2); //x spread
+          this.y = range(-20, h - this.r2); //y spread
+          this.xmax = w - this.r;
+          this.ymax = h - this.r;
+          this.vx = range(0, 2) - 6 + 5 * curosrX; //x speed
+          return (this.vy = 1 * this.r + range(-1, 3)); //y speed
+        };
+
+        Confetti.prototype.draw = function () {
+          var _ref;
+          this.x += this.vx;
+          this.y += this.vy;
+          this.opacity += this.dop;
+
+          var maxOpacity = Math.max(
+            0.2,
+            Math.min(1, $("#about").height() / (this.y * 3 + 1))
+          ); //scales max opacity with y position
+          if (this.opacity > maxOpacity) {
+            this.opacity = maxOpacity;
+            this.dop *= -1;
+          }
+          if ((this.opacity < 0 || this.y > this.ymax) && blossomState) {
+            this.replace();
+          }
+          if (!(0 < (_ref = this.x) && _ref < this.xmax)) {
+            this.x = (this.x + this.xmax) % this.xmax;
+          }
+          return drawCircle(
+            ~~this.x,
+            ~~this.y,
+            this.r,
+            this.rgb + "," + this.opacity + ")"
+          );
+        };
+
+        return Confetti;
+      })();
+
+      confetti = (function () {
+        var _i, _results;
+        _results = [];
+        for (
+          i = _i = 1;
+          1 <= NUM_CONFETTI ? _i <= NUM_CONFETTI : _i >= NUM_CONFETTI;
+          i = 1 <= NUM_CONFETTI ? ++_i : --_i
+        ) {
+          _results.push(new Confetti());
         }
-        return drawCircle(
-          ~~this.x,
-          ~~this.y,
-          this.r,
-          this.rgb + "," + this.opacity + ")"
-        );
+        return _results;
+      })();
+
+      window.step = function () {
+        setTimeout(step, 1000 / 60); //callback to self for endless animation, 1000/60 is 60fps
+        var c, _i, _len, _results;
+        context.clearRect(0, 0, w, h);
+        _results = [];
+        for (_i = 0, _len = confetti.length; _i < _len; _i++) {
+          c = confetti[_i];
+          _results.push(c.draw());
+        }
+        return _results;
       };
-
-      return Confetti;
-    })();
-
-    confetti = (function () {
-      var _i, _results;
-      _results = [];
-      for (
-        i = _i = 1;
-        1 <= NUM_CONFETTI ? _i <= NUM_CONFETTI : _i >= NUM_CONFETTI;
-        i = 1 <= NUM_CONFETTI ? ++_i : --_i
-      ) {
-        _results.push(new Confetti());
+      if (autoBlossom) {
+        step(); //start the first step
       }
-      return _results;
-    })();
+    }.call(this, document.getElementById("blossom")));
 
-    window.step = function () {
-      setTimeout(step, 1000 / 60); //callback to self for endless animation
-      var c, _i, _len, _results;
-      context.clearRect(0, 0, w, h);
-      _results = [];
-      for (_i = 0, _len = confetti.length; _i < _len; _i++) {
-        c = confetti[_i];
-        _results.push(c.draw());
+    function toggleBlossom() {
+      blossomState = !blossomState;
+      if (blossomState && !autoBlossom) {
+        autoBlossom = true;
+        step();
       }
-      return _results;
-    };
-    step(); //start the first step
-  }.call(this, document.getElementById("blossom")));
+      $("#blossom-toggle").toggleClass("toggle-on toggle-off");
+    }
+    $("#blossom-toggle").on("click", toggleBlossom);
 
-  // Waypoint animations
-  $(window).on("load", function () {
-    //for resetting values
+    // waypoints for resetting values
     $("#about").waypoint(function () {}, { offset: "0%" });
 
     $("#experience").waypoint(function () {}, { offset: "0%" });
@@ -175,19 +204,6 @@
         },
         { offset: "80%" }
       );
-    });
-
-    //text fade animation, not working properly yet
-    $(document).on("scroll", function () {
-      // $(".fade-in").each(function () {
-      // var windowHeight = $(window).height();
-      // var scrollPercent;
-      // scrollPercent = window.scrollY / windowHeight;
-      // if (scrollPercent > 1 && scrollPercent < 2)
-      //   scrollPercent = 1 - (scrollPercent % 1);
-      // if (scrollPercent < 0 || scrollPercent > 1) scrollPercent = 0;
-      // $(this).css("opacity", scrollPercent);
-      // });
     });
   }); //end of waypoint animations
 

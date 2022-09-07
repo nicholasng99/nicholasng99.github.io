@@ -177,6 +177,36 @@ a:hover {
   z-index: -1;
 }
 
+#blossom-toggle {
+  background: url("../img/blossom.png") no-repeat center;
+  background-size: 85px;
+  width: 85px;
+  height: 65px;
+  border-radius: 50%;
+  margin-bottom: 5px;
+  margin-right: 5px;
+  border: none;
+  outline: none;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  opacity: 0.5;
+}
+
+#blossom-toggle:hover {
+  opacity: 1;
+}
+
+.toggle-on {
+  filter: invert(40%) sepia(81%) saturate(6140%) hue-rotate(346deg)
+    brightness(82%) contrast(120%);
+}
+
+.toggle-off {
+  filter: none;
+}
+
 #branch {
   position: absolute;
   margin-top: -15%;
