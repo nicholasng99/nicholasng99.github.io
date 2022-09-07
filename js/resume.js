@@ -34,28 +34,25 @@
   // Blossom animation adapted from confetti code
   // adapted and rewritten from https://codepen.io/linrock/pen/nMadjQ
   (function (canvas) {
-    var COLORS,
-      Confetti,
-      NUM_CONFETTI,
-      PI_2,
-      confetti,
-      context,
-      i,
-      curosrX = 0.5,
-      aboutHeight;
+    var COLORS = [
+        [255, 220, 220],
+        [255, 167, 166],
+        [242, 84, 119],
+        [236, 39, 95],
+        [236, 39, 95],
+      ],
+      NUM_PETAL = 300,
+      PI_2 = 2 * Math.PI,
+      context = canvas.getContext("2d"),
+      curosrX = 0.75,
+      aboutHeight = 1000,
+      mobile = false,
+      petalMobileSize = [1, 4],
+      petalWebSize = [4, 8],
+      numOfPetals,
+      Petal,
+      petal;
 
-    NUM_CONFETTI = 350;
-
-    COLORS = [
-      [255, 220, 220],
-      [255, 167, 166],
-      [242, 84, 119],
-      [236, 39, 95],
-      [236, 39, 95],
-    ];
-
-    PI_2 = 2 * Math.PI;
-    context = canvas.getContext("2d");
     window.w = 0;
     window.h = 0;
 
@@ -63,6 +60,7 @@
       canvas.width = canvas.height = 0; //reset to 0 first since it can be resized to smaller dimension
       aboutHeight = $("#about").height(); //local var to track the height of #about section, calling $(...) every update is too slow
       window.w = canvas.width = $(document).width();
+      mobile = window.w < 992;
       return (window.h = canvas.height = $(document).height());
     });
 
@@ -81,25 +79,33 @@
       return (curosrX = e.pageX / w);
     });
 
-    Confetti = (function () {
+    function updatePetalSize(param) {
+      //size of circles depends on mobile state
+      param.mobile = mobile;
+      if (mobile) param.r = ~~range(petalMobileSize[0], petalMobileSize[1]);
+      else param.r = ~~range(petalWebSize[0], petalWebSize[1]);
+    }
+
+    Petal = (function () {
       function Confetti() {
         this.style = COLORS[~~range(0, 5)];
         this.rgb =
           "rgba(" + this.style[0] + "," + this.style[1] + "," + this.style[2];
-        this.r = ~~range(3, 7); //size of circles
+        updatePetalSize(this);
         this.r2 = 2 * this.r;
         this.replace();
       }
 
       Confetti.prototype.replace = function () {
+        if (this.mobile != mobile) updatePetalSize(this);
         this.opacity = 0;
-        this.dop = 0.02 / range(1, 4); //opacity rate
+        this.dop = 0.02 / range(2, 5); //opacity rate
         this.x = range(-this.r2, w - this.r2); //x spread
         this.y = range(-20, h - this.r2); //y spread
         this.xmax = w - this.r;
         this.ymax = h - this.r;
-        this.vx = range(0, 2) - 6 + 5 * curosrX; //x speed
-        return (this.vy = 1 * this.r + range(-1, 3)); //y speed
+        this.vx = range(0, 2) - 6 + 4 * curosrX; //x speed
+        return (this.vy = this.r / 5 + range(0, 1)); //y speed
       };
 
       Confetti.prototype.draw = function () {
@@ -133,15 +139,15 @@
       return Confetti;
     })();
 
-    confetti = (function () {
+    petal = (function () {
       var _i, _results;
       _results = [];
       for (
-        i = _i = 1;
-        1 <= NUM_CONFETTI ? _i <= NUM_CONFETTI : _i >= NUM_CONFETTI;
-        i = 1 <= NUM_CONFETTI ? ++_i : --_i
+        numOfPetals = _i = 1;
+        1 <= NUM_PETAL ? _i <= NUM_PETAL : _i >= NUM_PETAL;
+        numOfPetals = 1 <= NUM_PETAL ? ++_i : --_i
       ) {
-        _results.push(new Confetti());
+        _results.push(new Petal());
       }
       return _results;
     })();
@@ -151,8 +157,8 @@
       var c, _i, _len, _results;
       context.clearRect(0, 0, w, h);
       _results = [];
-      for (_i = 0, _len = confetti.length; _i < _len; _i++) {
-        c = confetti[_i];
+      for (_i = 0, _len = petal.length; _i < _len; _i++) {
+        c = petal[_i];
         _results.push(c.draw());
       }
       return _results;
