@@ -1,9 +1,12 @@
 (function (e) {
   ("use strict");
 
+  // Global vars
+  var blossomState = true;
+
   // Enable tooltips
   $(function () {
-    $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="tooltip"]').tooltip({ trigger: "hover" });
   });
 
   // Typed text animation
@@ -22,6 +25,12 @@
     });
   }
 
+  function toggleBlossom() {
+    blossomState = !blossomState;
+    $("#blossom-toggle").toggleClass("toggle-on toggle-off");
+  }
+  $("#blossom-toggle").on("click", toggleBlossom);
+
   // Blossom animation adapted from confetti code
   // adapted and rewritten from https://codepen.io/linrock/pen/nMadjQ
   (function (canvas) {
@@ -32,7 +41,8 @@
       confetti,
       context,
       i,
-      curosrX = 0.5;
+      curosrX = 0.5,
+      aboutHeight;
 
     NUM_CONFETTI = 350;
 
@@ -49,12 +59,12 @@
     window.w = 0;
     window.h = 0;
 
-    function resizeCanvas() {
+    $(window).on("load resize", function () {
       canvas.width = canvas.height = 0; //reset to 0 first since it can be resized to smaller dimension
+      aboutHeight = $("#about").height(); //local var to track the height of #about section, calling $(...) every update is too slow
       window.w = canvas.width = $(document).width();
       return (window.h = canvas.height = $(document).height());
-    }
-    $(window).on("load resize", resizeCanvas);
+    });
 
     function range(a, b) {
       return (b - a) * Math.random() + a;
@@ -98,12 +108,15 @@
         this.y += this.vy;
         this.opacity += this.dop;
 
-        var maxOpacity = Math.min(1, 1000 / (window.scrollY * 3 + 1));
+        var maxOpacity = Math.max(
+          0.2,
+          Math.min(1, aboutHeight / (this.y * 3 + 1))
+        ); //scales max opacity with y position
         if (this.opacity > maxOpacity) {
           this.opacity = maxOpacity;
           this.dop *= -1;
         }
-        if (this.opacity < 0 || this.y > this.ymax) {
+        if ((this.opacity < 0 || this.y > this.ymax) && blossomState) {
           this.replace();
         }
         if (!(0 < (_ref = this.x) && _ref < this.xmax)) {
@@ -134,7 +147,7 @@
     })();
 
     window.step = function () {
-      setTimeout(step, 1000 / 60); //callback to self for endless animation
+      setTimeout(step, 1000 / 60); //callback to self for endless animation, 1000/60 is 60fps
       var c, _i, _len, _results;
       context.clearRect(0, 0, w, h);
       _results = [];
@@ -175,19 +188,6 @@
         },
         { offset: "80%" }
       );
-    });
-
-    //text fade animation, not working properly yet
-    $(document).on("scroll", function () {
-      // $(".fade-in").each(function () {
-      // var windowHeight = $(window).height();
-      // var scrollPercent;
-      // scrollPercent = window.scrollY / windowHeight;
-      // if (scrollPercent > 1 && scrollPercent < 2)
-      //   scrollPercent = 1 - (scrollPercent % 1);
-      // if (scrollPercent < 0 || scrollPercent > 1) scrollPercent = 0;
-      // $(this).css("opacity", scrollPercent);
-      // });
     });
   }); //end of waypoint animations
 
