@@ -3,7 +3,7 @@
 
   // Enable tooltips
   $(function () {
-    $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="tooltip"]').tooltip({ trigger: "hover" });
   });
 
   // Typed text animation
@@ -21,6 +21,14 @@
       $(this).css("width", "0%");
     });
   }
+
+  var blossomState = true;
+  function toggleBlossom() {
+    blossomState = !blossomState;
+    $(this).toggleClass("toggle-on toggle-off");
+  }
+
+  $("#blossom-toggle").on("click", toggleBlossom);
 
   // Blossom animation adapted from confetti code
   // adapted and rewritten from https://codepen.io/linrock/pen/nMadjQ
@@ -98,12 +106,15 @@
         this.y += this.vy;
         this.opacity += this.dop;
 
-        var maxOpacity = Math.min(1, $("#about").height() / (window.scrollY * 3 + 1));//scales max opacity with scroll position
+        var maxOpacity = Math.min(
+          1,
+          $("#about").height() / (window.scrollY * 3 + 1)
+        ); //scales max opacity with scroll position
         if (this.opacity > maxOpacity) {
           this.opacity = maxOpacity;
           this.dop *= -1;
         }
-        if (this.opacity < 0 || this.y > this.ymax) {
+        if ((this.opacity < 0 || this.y > this.ymax) && blossomState) {
           this.replace();
         }
         if (!(0 < (_ref = this.x) && _ref < this.xmax)) {
