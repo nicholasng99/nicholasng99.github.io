@@ -104,7 +104,7 @@
         this.y = range(-20, h - this.r2); //y spread
         this.xmax = w - this.r;
         this.ymax = h - this.r;
-        this.vx = range(0, 2) - 6 + 4 * curosrX; //x speed
+        this.vx = (range(0, 2) - 6 + 4 * curosrX) / 2; //x speed
         return (this.vy = this.r / 5 + range(0, 1)); //y speed
       };
 
