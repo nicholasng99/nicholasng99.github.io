@@ -174,7 +174,9 @@ a:hover {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: -1;
+  z-index: 2;
+  pointer-events: none;
+  user-select: none;
 }
 
 #blossom-toggle {
@@ -194,11 +196,8 @@ a:hover {
   opacity: 0.5;
 }
 
-#blossom-toggle:hover {
-  opacity: 1;
-}
-
 .toggle-on {
+  /* converts the black png to target red color */
   filter: invert(40%) sepia(81%) saturate(6140%) hue-rotate(346deg)
     brightness(82%) contrast(120%);
 }
@@ -212,5 +211,31 @@ a:hover {
   margin-top: -15%;
   left: 40%;
   width: 60%;
+  z-index: 2;
+  pointer-events: none;
+  user-select: none;
+}
+
+#interests {
+  position: relative;
+}
+
+#merlion-div {
+  position: absolute;
+  width: 50%;
+  height: 25%;
+  bottom: 0;
   z-index: -1;
+}
+
+#merlion {
+  height: 100%;
+}
+
+#fountain {
+  position: absolute;
+  top: 20%;
+  left: 10%;
+  pointer-events: none;
+  user-select: none;
 }
