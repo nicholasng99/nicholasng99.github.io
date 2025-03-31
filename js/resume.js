@@ -166,6 +166,26 @@
     step(); //start the first step
   }.call(this, document.getElementById("blossom")));
 
+  // {// Merlion animation
+  //   var fountain = document.getElementById("fountain");
+  //   var context = fountain.getContext("2d");
+
+  //   function fill() {
+  //     context.beginPath();
+  //     context.rect(0, 0, fountain.width, fountain.height);
+  //     context.fillStyle = "red";
+  //     context.fill();
+  //   }
+    
+  //   $(window).on("load resize", function () {
+  //     fountain.width = fountain.height = 0; //reset to 0 first since it can be resized to smaller dimension
+  //     // merlionHeight = $("#merlion-div").height(); //local var to track the height of #about section, calling $(...) every update is too slow
+  //     fountain.width = $("#merlion-div").width();
+  //     fountain.height = $("#merlion-div").height();
+  //     return fill();
+  //   });
+  // }
+
   // Waypoint animations
   $(window).on("load", function () {
     //for resetting values
