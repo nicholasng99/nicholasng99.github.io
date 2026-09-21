@@ -4,9 +4,11 @@
   // Global vars
   var blossomState = true;
 
-  // Enable tooltips
+  // Enable tooltips (Bootstrap 5 native API)
   $(function () {
-    $('[data-toggle="tooltip"]').tooltip({ trigger: "hover" });
+    document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(function (el) {
+      new bootstrap.Tooltip(el, { trigger: "hover" });
+    });
   });
 
   // Typed text animation
@@ -197,6 +199,9 @@
     });
   }); //end of waypoint animations
 
+  // Smooth scrolling for in-page links. Bootstrap 5 sets `scroll-behavior: smooth`
+  // on :root (and drops it under prefers-reduced-motion), so a native scrollTo
+  // picks the right behaviour; jQuery's animate() fights the CSS and stalls.
   e('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function () {
     if (
       location.pathname.replace(/^\//, "") ==
@@ -204,19 +209,15 @@
       location.hostname == this.hostname
     ) {
       var t = e(this.hash);
-      if ((t = t.length ? t : e("[name=" + this.hash.slice(1) + "]")).length)
-        return (
-          e("html, body").animate(
-            { scrollTop: t.offset().top },
-            1e3,
-            "easeInOutExpo"
-          ),
-          !1
-        );
+      if ((t = t.length ? t : e("[name=" + this.hash.slice(1) + "]")).length) {
+        window.scrollTo({ top: t.offset().top });
+        return false;
+      }
     }
   }),
     e(".js-scroll-trigger").click(function () {
-      e(".navbar-collapse").collapse("hide");
+      var nav = document.querySelector(".navbar-collapse");
+      bootstrap.Collapse.getOrCreateInstance(nav, { toggle: false }).hide();
     }),
-    e("body").scrollspy({ target: "#sideNav" });
+    new bootstrap.ScrollSpy(document.body, { target: "#sideNav" });
 })(jQuery);
